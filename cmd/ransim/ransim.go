@@ -22,13 +22,13 @@ func main() {
 	hoLogic := flag.String("hoLogic", "mho", "the location of handover logic {local,mho}")
 
 	cfg := &manager.Config{
-		*caPath,
-		*keyPath,
-		*certPath,
-		*grpcPort,
-		*modelName,
-		*metricName,
-		*hoLogic,
+		CAPath:     *caPath,
+		KeyPath:    *keyPath,
+		CertPath:   *certPath,
+		GRPCPort:   *grpcPort,
+		ModelName:  *modelName,
+		MetricName: *metricName,
+		HOLogic:    *hoLogic,
 	}
 	mgr, err := manager.NewManager(cfg)
 	if err == nil {

@@ -32,9 +32,28 @@ type Manager struct {
 }
 
 func (m Manager) Run() {
-
+	log.Info("Running Manager")
+	if err := m.Start(); err != nil {
+		log.Error("Unable to run Manager:", err)
+	}
 }
 
 func (m Manager) Close() {
 
+}
+
+func (m Manager) Start() error {
+	if err := model.Load(m.model, m.config.ModelName); err != nil {
+		log.Error(err)
+		return err
+	}
+	if err := m.startNorthboundSever(); err != nil {
+		log.Error(err)
+	}
+	return nil
+}
+
+func (m Manager) startNorthboundSever() error {
+
+	return nil
 }
