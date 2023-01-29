@@ -1,4 +1,8 @@
 certs:
-	cd cmd/ransim/.onos/config/certs; ./gen.sh; cd ../../../..
+	cd cmd/ransim/.onos/config/certs; \
+	./gen.sh; \
+	cd ../../../../
 
-.PHONY: certs
+run:
+	go run cmd/ransim/ransim.go
+.PHONY: certs run
