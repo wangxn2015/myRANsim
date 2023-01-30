@@ -6,6 +6,9 @@ require (
 	github.com/jinzhu/copier v0.3.5
 	github.com/onosproject/onos-api/go v0.10.21
 	github.com/onosproject/onos-e2-sm/servicemodels/e2sm_mho_go v0.8.36
+	github.com/onosproject/onos-lib-go v0.8.17
+	github.com/onosproject/onos-ric-sdk-go v0.8.11
+	github.com/openconfig/gnmi v0.0.0-20200617225440-d2b4e6a45802
 	github.com/spf13/viper v1.9.0
 	github.com/wangxn2015/onos-lib-go v0.8.16-0.20230116082947-30c78f852c02
 	google.golang.org/grpc v1.41.0
@@ -14,7 +17,8 @@ require (
 
 require (
 	github.com/Shopify/sarama v1.31.1 // indirect
-	github.com/atomix/atomix-go-framework v0.10.0 // indirect
+	github.com/atomix/atomix-go-framework v0.10.1 // indirect
+	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.2.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
@@ -24,9 +28,10 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
@@ -38,7 +43,6 @@ require (
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.4.2 // indirect
-	github.com/onosproject/onos-lib-go v0.8.17 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
