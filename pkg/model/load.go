@@ -15,7 +15,7 @@ func ViperConfigure(configname string) {
 
 	// Set the path to look for the configurations file
 	viper.AddConfigPath("./" + configDir + "/config")
-	viper.AddConfigPath("./cmd/" + configDir + "/config")
+	viper.AddConfigPath("./cmd/ransim" + configDir + "/config")
 	//viper.AddConfigPath("$HOME/" + configDir + "/config")
 	//viper.AddConfigPath("/etc/onos/config")
 	//viper.AddConfigPath(".")
