@@ -1,7 +1,9 @@
 package manager
 
 import (
+	"github.com/wangxn2015/myRANsim/pkg/api/ue_location"
 	"github.com/wangxn2015/myRANsim/pkg/model"
+	store "github.com/wangxn2015/myRANsim/pkg/store/ue_location"
 	"github.com/wangxn2015/onos-lib-go/pkg/logging"
 	"github.com/wangxn2015/onos-lib-go/pkg/northbound"
 )
@@ -21,16 +23,18 @@ type Config struct {
 func NewManager(cfg *Config) (*Manager, error) {
 	log.Info("Creating Manager")
 	mgr := &Manager{
-		config: *cfg,
-		model:  &model.Model{},
+		config:  *cfg,
+		model:   &model.Model{},
+		ueStore: store.NewInMemoryUeStore(),
 	}
 	return mgr, nil
 }
 
 type Manager struct {
-	config Config
-	model  *model.Model
-	server *northbound.Server
+	config  Config
+	model   *model.Model
+	server  *northbound.Server
+	ueStore store.UeStore
 }
 
 func (m Manager) Run() {
@@ -63,6 +67,20 @@ func (m Manager) startNorthboundSever() error {
 		int16(m.config.GRPCPort),
 		true,
 		northbound.SecurityConfig{}))
+
+	m.server.AddService(ue_location.NewService(m.ueStore))
+
+	donCh := make(chan error)
+	go func() {
+		err := m.server.Serve(func(started string) {
+			log.Info("started northbound services on：", started)
+			close(donCh)
+		})
+		if err != nil {
+			donCh <- err
+		}
+	}()
+	return <-donCh
 
 	return nil
 }
