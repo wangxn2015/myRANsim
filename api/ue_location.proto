@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package ue_location;
+option go_package = "./ue_location";
+
+message Location {
+    double lat =1;
+    double lng = 2;
+}
+
+message UeInfo{
+    uint64 imsi =1;
+    Location location =2;
+    double bearing =3;
+}
+
+message UeInfoArray {
+    repeated UeInfo ue_info =1;
+}
+
+message UeLocationRequest{
+    uint64 processure_code = 1;
+    uint64 imsi =2;
+}
+
+message UesLocationRequest{
+    uint64 processure_code = 1;
+}
+
+
+service UeLocationService{
+    rpc GetUes (UesLocationRequest) returns (stream UeInfo);
+    rpc GetUe (UeLocationRequest) returns (stream UeInfo);
+}
+
+

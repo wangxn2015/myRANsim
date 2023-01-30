@@ -3,6 +3,7 @@ package manager
 import (
 	"github.com/wangxn2015/myRANsim/pkg/model"
 	"github.com/wangxn2015/onos-lib-go/pkg/logging"
+	"github.com/wangxn2015/onos-lib-go/pkg/northbound"
 )
 
 var log = logging.GetLogger()
@@ -29,6 +30,7 @@ func NewManager(cfg *Config) (*Manager, error) {
 type Manager struct {
 	config Config
 	model  *model.Model
+	server *northbound.Server
 }
 
 func (m Manager) Run() {
@@ -54,6 +56,13 @@ func (m Manager) Start() error {
 }
 
 func (m Manager) startNorthboundSever() error {
+	m.server = northbound.NewServer(northbound.NewServerCfg(
+		m.config.CAPath,
+		m.config.KeyPath,
+		m.config.CertPath,
+		int16(m.config.GRPCPort),
+		true,
+		northbound.SecurityConfig{}))
 
 	return nil
 }
