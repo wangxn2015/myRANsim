@@ -13,9 +13,18 @@ func main() {
 
 	ready := make(chan bool)
 
-	caPath := flag.String("caPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
-	keyPath := flag.String("keyPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-key.pem", "path to client private key")
-	certPath := flag.String("certPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-cert.pem", "path to client certificate")
+	//caPath := flag.String("caPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
+	//keyPath := flag.String("keyPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-key.pem", "path to client private key")
+	//certPath := flag.String("certPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-cert.pem", "path to client certificate")
+
+	//caPath := flag.String("caPath", "../ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
+	//keyPath := flag.String("keyPath", "../ransim/.onos/config/certs/server-key.pem", "path to client private key")
+	//certPath := flag.String("certPath", "../ransim/.onos/config/certs/server-cert.pem", "path to client certificate")
+
+	caPath := flag.String("caPath", "/home/justin/go_project/myRANsim/cmd/ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
+	keyPath := flag.String("keyPath", "/home/justin/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-key.pem", "path to client private key")
+	certPath := flag.String("certPath", "/home/justin/go_project/myRANsim/cmd/ransim/.onos/config/certs/server-cert.pem", "path to client certificate")
+	
 	grpcPort := flag.Int("grpcPort", 5150, "GRPC port for e2t server")
 	modelName := flag.String("modelName", "model/two-cell-two-node-model.yaml", "RAN sim model file")
 	metricName := flag.String("metricName", "metrics", "RAN sim metric file")

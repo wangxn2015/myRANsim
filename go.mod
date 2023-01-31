@@ -8,7 +8,6 @@ require (
 	github.com/onosproject/onos-e2-sm/servicemodels/e2sm_mho_go v0.8.36
 	github.com/onosproject/onos-lib-go v0.8.17
 	github.com/onosproject/onos-ric-sdk-go v0.8.11
-	github.com/openconfig/gnmi v0.0.0-20200617225440-d2b4e6a45802
 	github.com/spf13/viper v1.9.0
 	github.com/wangxn2015/onos-lib-go v0.8.16-0.20230116082947-30c78f852c02
 	google.golang.org/grpc v1.41.0
@@ -28,7 +27,6 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0 // indirect

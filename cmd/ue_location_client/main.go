@@ -19,9 +19,9 @@ func main() {
 
 	ready := make(chan bool)
 
-	caPath := flag.String("caPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
-	keyPath := flag.String("keyPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/client-key.pem", "path to client private key")
-	certPath := flag.String("certPath", "/home/baicells/go_project/myRANsim/cmd/ransim/.onos/config/certs/client-cert.pem", "path to client certificate")
+	caPath := flag.String("caPath", "../ransim/.onos/config/certs/ca-cert.pem", "path to CA certificate")
+	keyPath := flag.String("keyPath", "../ransim/.onos/config/certs/client-key.pem", "path to client private key")
+	certPath := flag.String("certPath", "../ransim/.onos/config/certs/client-cert.pem", "path to client certificate")
 	grpcPort := flag.Int("grpcPort", 5150, "GRPC port for e2t server")
 
 	_, err := certs.HandleCertPaths(*caPath, *keyPath, *certPath, true)
@@ -33,7 +33,7 @@ func main() {
 		KeyPath:  *keyPath,
 		CertPath: *certPath,
 		GRPCPort: *grpcPort,
-		Insecure: true,
+		Insecure: false,
 	}
 
 	manager := pkg.NewManager(cfg)
