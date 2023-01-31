@@ -36,6 +36,44 @@ func WithOptions(opts Options) Option {
 	})
 }
 
+// WithTopoHost sets the host for the topo service
+func WithHost(host string) Option {
+	return newOption(func(options *Options) {
+		options.Service.Host = host
+	})
+}
+
+// WithTopoPort sets the port for the topo service
+func WithPort(port int) Option {
+	return newOption(func(options *Options) {
+		options.Service.Port = port
+	})
+}
+
+func WithInsecure(is_insecure bool) Option {
+	return newOption(func(options *Options) {
+		options.Service.Insecure = is_insecure
+	})
+}
+
+func WithCaPath(path string) Option {
+	return newOption(func(options *Options) {
+		options.Service.CaPath = path
+	})
+}
+
+func WithCertPath(path string) Option {
+	return newOption(func(options *Options) {
+		options.Service.CertPath = path
+	})
+}
+
+func WithKeyPath(path string) Option {
+	return newOption(func(options *Options) {
+		options.Service.KeyPath = path
+	})
+}
+
 // Options topo SDK options
 type Options struct {
 	// Service is the service options
@@ -50,6 +88,10 @@ type ServiceOptions struct {
 	Port int
 
 	Insecure bool
+	// used for testing ---- wxn, don't use it for production
+	CaPath   string
+	CertPath string //CA Cert path
+	KeyPath  string
 }
 
 // GetHost gets the service host

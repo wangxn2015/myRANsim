@@ -2,17 +2,20 @@ package pkg
 
 import (
 	"context"
-	"github.com/onosproject/onos-ric-sdk-go/pkg/utils/creds"
+	"crypto/tls"
+	"crypto/x509"
+	"fmt"
 	"github.com/wangxn2015/onos-lib-go/pkg/errors"
 	"github.com/wangxn2015/onos-lib-go/pkg/logging"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
 	"io"
+	"io/ioutil"
 
 	"github.com/onosproject/onos-ric-sdk-go/pkg/topo/connection"
 	model "github.com/wangxn2015/myRANsim/api/ue_location"
 	"github.com/wangxn2015/onos-lib-go/pkg/grpc/retry"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 )
 
 var log = logging.GetLogger()
@@ -22,11 +25,20 @@ type Config struct {
 	KeyPath  string
 	CertPath string
 	GRPCPort int
+	Insecure bool
 }
 
 func NewManager(cfg Config) *Manager {
+	client, err := NewClient(WithInsecure(cfg.Insecure))
+	//client, err := NewClient(
+	//	WithHost(DefaultServiceHost),
+	//	WithPort(cfg.GRPCPort),
+	//	WithInsecure(cfg.Insecure),
+	//	WithKeyPath(cfg.KeyPath),
+	//	WithCaPath(cfg.CAPath),
+	//	WithCertPath(cfg.CertPath),
+	//)
 
-	client, err := NewClient()
 	if err != nil {
 		log.Error("create client error: ", err)
 	}
@@ -90,13 +102,28 @@ func NewClient(opts ...Option) (Client, error) {
 	if clientOptions.Service.Insecure {
 		dialOpts = append(dialOpts, grpc.WithInsecure())
 	} else {
-		tlsConfig, err := creds.GetClientCredentials()
+		//------------change here ----wxn
+		log.Info("clientOptions.Service.Insecure: ", clientOptions.Service.Insecure)
+		log.Infof("Loading client certs: %s %s", clientOptions.Service.CertPath, clientOptions.Service.KeyPath)
+		clientCerts, err := tls.LoadX509KeyPair(clientOptions.Service.CertPath, clientOptions.Service.KeyPath)
 		if err != nil {
-			log.Warn(err)
+			log.Info("Error loading default certs")
+		}
+
+		//var clientCAs *x509.CertPool
+		clientCAs, err := GetCertPool(clientOptions.Service.CaPath) //CAPath: CA机构
+		if err != nil {
+			log.Error("error here")
 			return nil, err
 		}
 
+		tlsConfig := &tls.Config{
+			Certificates:       []tls.Certificate{clientCerts},
+			ClientCAs:          clientCAs,
+			InsecureSkipVerify: clientOptions.Service.Insecure,
+		}
 		dialOpts = append(dialOpts, grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig)))
+
 	}
 	conns := connection.NewManager()
 	conn, err := conns.Connect(clientOptions.Service.GetAddress(), dialOpts...)
@@ -106,11 +133,24 @@ func NewClient(opts ...Option) (Client, error) {
 	}
 
 	cl := model.NewUeLocationServiceClient(conn)
-	log.Info("connection established")
+	log.Info("UeLocationServiceClient established")
 
 	return &topo{
 		client: cl,
 	}, nil
+}
+
+// GetCertPool loads the Certificate Authority from the given path
+func GetCertPool(CaPath string) (*x509.CertPool, error) {
+	certPool := x509.NewCertPool()
+	ca, err := ioutil.ReadFile(CaPath)
+	if err != nil {
+		return nil, err
+	}
+	if ok := certPool.AppendCertsFromPEM(ca); !ok {
+		return nil, fmt.Errorf("failed to append CA certificate from %s", CaPath)
+	}
+	return certPool, nil
 }
 
 type topo struct {

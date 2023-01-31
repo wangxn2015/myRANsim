@@ -33,6 +33,7 @@ func main() {
 		KeyPath:  *keyPath,
 		CertPath: *certPath,
 		GRPCPort: *grpcPort,
+		Insecure: true,
 	}
 
 	manager := pkg.NewManager(cfg)
