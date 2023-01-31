@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import "fmt"
 
@@ -7,7 +7,7 @@ const (
 	DefaultServicePort = 5150
 
 	// DefaultServiceHost :
-	DefaultServiceHost = "onos-topo"
+	DefaultServiceHost = "127.0.0.1"
 )
 
 // Option topo client

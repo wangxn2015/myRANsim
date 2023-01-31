@@ -1,8 +1,12 @@
-package main
+package pkg
 
 import (
 	"context"
 	"github.com/onosproject/onos-ric-sdk-go/pkg/utils/creds"
+	"github.com/wangxn2015/onos-lib-go/pkg/errors"
+	"github.com/wangxn2015/onos-lib-go/pkg/logging"
+	"google.golang.org/grpc/status"
+	"io"
 
 	"github.com/onosproject/onos-ric-sdk-go/pkg/topo/connection"
 	model "github.com/wangxn2015/myRANsim/api/ue_location"
@@ -10,6 +14,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
+
+var log = logging.GetLogger()
 
 type Config struct {
 	CAPath   string
@@ -44,14 +50,24 @@ func (m Manager) Run() {
 }
 
 func (m Manager) start() error {
+	go func() {
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+		ch := make(chan model.UeInfo)
+		err := m.client.GetUE(ctx, ch)
+		if err != nil {
+			log.Error("error getting UE: ", err)
+		}
+		for resp := range ch {
+			log.Info("manager receive resp: %v", resp)
+		}
+	}()
 
 	return nil
 }
 
-//---------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------
 type Client interface {
-	GetUE(ctx context.Context) error
+	GetUE(ctx context.Context, ch chan<- model.UeInfo) error
 }
 
 // NewClient creates a new topo client
@@ -101,7 +117,35 @@ type topo struct {
 	client model.UeLocationServiceClient
 }
 
-func (t topo) GetUE(ctx context.Context) error {
+func (t topo) GetUE(ctx context.Context, ch chan<- model.UeInfo) error {
+	req := model.UeLocationRequest{
+		ProcessureCode: 1,
+		Imsi:           1,
+	}
+	stream, err := t.client.GetUe(ctx, &req)
+	if err != nil {
+		return errors.FromGRPC(err)
+	}
+	go func() {
+		for {
+			resp, err := stream.Recv()
+			if err == io.EOF || err == context.Canceled {
+				break
+			}
+			if err != nil {
+				stat, ok := status.FromError(err)
+				if ok {
+					err = errors.FromStatus(stat)
+					if errors.IsCanceled(err) || errors.IsTimeout(err) {
+						break
+					}
+				}
+				log.Error("An error occurred here", err)
+			}
+			log.Info("recv msg: %+v", resp)
+			ch <- *resp
+		}
+	}()
 
 	return nil
 }

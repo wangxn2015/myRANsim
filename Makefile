@@ -3,7 +3,7 @@ certs:
 	./gen.sh; \
 	cd ../../../../
 
-gen:
+proto:
 	protoc --proto_path=api \
 		  	--go_out=:api \
 		  	--go-grpc_out=:api \
@@ -15,4 +15,4 @@ run:
 clean:
 	rm api/*.go
 
-.PHONY: certs run gen clean
+.PHONY: certs run proto clean

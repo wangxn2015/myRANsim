@@ -3,7 +3,7 @@ package ue_location
 import (
 	service "github.com/onosproject/onos-lib-go/pkg/northbound"
 	model "github.com/wangxn2015/myRANsim/api/ue_location"
-	"github.com/wangxn2015/myRANsim/pkg/store/ue_location"
+	"github.com/wangxn2015/myRANsim/pkg/store/ue_location_store"
 	"github.com/wangxn2015/onos-lib-go/pkg/logging"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -12,14 +12,14 @@ import (
 
 var log = logging.GetLogger()
 
-func NewService(ueStore ue_location.UeStore) service.Service {
+func NewService(ueStore ue_location_store.UeStore) service.Service {
 	return &Service{
 		ueStore: ueStore,
 	}
 }
 
 type Service struct {
-	ueStore ue_location.UeStore
+	ueStore ue_location_store.UeStore
 }
 
 func (s Service) Register(r *grpc.Server) {
@@ -31,7 +31,7 @@ func (s Service) Register(r *grpc.Server) {
 
 type Server struct {
 	model.UnimplementedUeLocationServiceServer
-	ueStore ue_location.UeStore
+	ueStore ue_location_store.UeStore
 }
 
 func (s Server) GetUes(request *model.UesLocationRequest, server model.UeLocationService_GetUesServer) error {

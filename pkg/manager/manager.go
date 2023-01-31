@@ -3,7 +3,7 @@ package manager
 import (
 	"github.com/wangxn2015/myRANsim/pkg/api/ue_location"
 	"github.com/wangxn2015/myRANsim/pkg/model"
-	store "github.com/wangxn2015/myRANsim/pkg/store/ue_location"
+	store "github.com/wangxn2015/myRANsim/pkg/store/ue_location_store"
 	"github.com/wangxn2015/onos-lib-go/pkg/logging"
 	"github.com/wangxn2015/onos-lib-go/pkg/northbound"
 )

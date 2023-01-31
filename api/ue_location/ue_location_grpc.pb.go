@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.6
-// source: ue_location.proto
+// source: ue_location_store.proto
 
 package ue_location
 
@@ -35,7 +35,7 @@ func NewUeLocationServiceClient(cc grpc.ClientConnInterface) UeLocationServiceCl
 }
 
 func (c *ueLocationServiceClient) GetUes(ctx context.Context, in *UesLocationRequest, opts ...grpc.CallOption) (UeLocationService_GetUesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &UeLocationService_ServiceDesc.Streams[0], "/ue_location.UeLocationService/GetUes", opts...)
+	stream, err := c.cc.NewStream(ctx, &UeLocationService_ServiceDesc.Streams[0], "/ue_location_store.UeLocationService/GetUes", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (x *ueLocationServiceGetUesClient) Recv() (*UeInfo, error) {
 }
 
 func (c *ueLocationServiceClient) GetUe(ctx context.Context, in *UeLocationRequest, opts ...grpc.CallOption) (UeLocationService_GetUeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &UeLocationService_ServiceDesc.Streams[1], "/ue_location.UeLocationService/GetUe", opts...)
+	stream, err := c.cc.NewStream(ctx, &UeLocationService_ServiceDesc.Streams[1], "/ue_location_store.UeLocationService/GetUe", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (x *ueLocationServiceGetUeServer) Send(m *UeInfo) error {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UeLocationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ue_location.UeLocationService",
+	ServiceName: "ue_location_store.UeLocationService",
 	HandlerType: (*UeLocationServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
@@ -191,5 +191,5 @@ var UeLocationService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "ue_location.proto",
+	Metadata: "ue_location_store.proto",
 }

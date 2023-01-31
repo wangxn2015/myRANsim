@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package ue_location;
-option go_package = "./ue_location";
+option go_package = "./ue_location_store";
 
 message Location {
     double lat =1;

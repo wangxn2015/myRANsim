@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v3.21.6
-// source: ue_location.proto
+// source: ue_location_store.proto
 
 package ue_location
 
@@ -342,19 +342,19 @@ func file_ue_location_proto_rawDescGZIP() []byte {
 
 var file_ue_location_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_ue_location_proto_goTypes = []interface{}{
-	(*Location)(nil),           // 0: ue_location.Location
-	(*UeInfo)(nil),             // 1: ue_location.UeInfo
-	(*UeInfoArray)(nil),        // 2: ue_location.UeInfoArray
-	(*UeLocationRequest)(nil),  // 3: ue_location.UeLocationRequest
-	(*UesLocationRequest)(nil), // 4: ue_location.UesLocationRequest
+	(*Location)(nil),           // 0: ue_location_store.Location
+	(*UeInfo)(nil),             // 1: ue_location_store.UeInfo
+	(*UeInfoArray)(nil),        // 2: ue_location_store.UeInfoArray
+	(*UeLocationRequest)(nil),  // 3: ue_location_store.UeLocationRequest
+	(*UesLocationRequest)(nil), // 4: ue_location_store.UesLocationRequest
 }
 var file_ue_location_proto_depIdxs = []int32{
-	0, // 0: ue_location.UeInfo.location:type_name -> ue_location.Location
-	1, // 1: ue_location.UeInfoArray.ue_info:type_name -> ue_location.UeInfo
-	4, // 2: ue_location.UeLocationService.GetUes:input_type -> ue_location.UesLocationRequest
-	3, // 3: ue_location.UeLocationService.GetUe:input_type -> ue_location.UeLocationRequest
-	1, // 4: ue_location.UeLocationService.GetUes:output_type -> ue_location.UeInfo
-	1, // 5: ue_location.UeLocationService.GetUe:output_type -> ue_location.UeInfo
+	0, // 0: ue_location_store.UeInfo.location:type_name -> ue_location_store.Location
+	1, // 1: ue_location_store.UeInfoArray.ue_info:type_name -> ue_location_store.UeInfo
+	4, // 2: ue_location_store.UeLocationService.GetUes:input_type -> ue_location_store.UesLocationRequest
+	3, // 3: ue_location_store.UeLocationService.GetUe:input_type -> ue_location_store.UeLocationRequest
+	1, // 4: ue_location_store.UeLocationService.GetUes:output_type -> ue_location_store.UeInfo
+	1, // 5: ue_location_store.UeLocationService.GetUe:output_type -> ue_location_store.UeInfo
 	4, // [4:6] is the sub-list for method output_type
 	2, // [2:4] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

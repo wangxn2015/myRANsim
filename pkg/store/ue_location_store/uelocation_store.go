@@ -1,4 +1,4 @@
-package ue_location
+package ue_location_store
 
 import (
 	"context"
@@ -43,7 +43,7 @@ func (store *InMemoryUeStore) moveUes() {
 			Lng: 116.24 + float64(i+1)*0.0005*rand.Float64(),
 		}
 
-		store.data[uint64(2000+i)].Location = Location
+		store.data[uint64(2023+i)].Location = Location
 	}
 
 }
@@ -54,7 +54,7 @@ func (store *InMemoryUeStore) Search(ctx context.Context, found func(ue *ue_loca
 		store.generateData()
 	}
 
-	for j := 0; j < 100; j++ {
+	for {
 		store.moveUes()
 		for _, ue := range store.data {
 			if ctx.Err() == context.Canceled || ctx.Err() == context.DeadlineExceeded {
